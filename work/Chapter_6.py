@@ -48,3 +48,55 @@ else : # break문이 호출되지 않은 경우
 word = 'thud'
 for letter in word : 
     print(letter) #한번에 한 문자를 생성
+ 
+print('='*10)   
+
+for letter in word : 
+    if letter == 'u' :
+        break #break 문 추가
+    print(letter)
+    
+print('='*10)   
+
+for letter in word : 
+    if letter == 'x' :
+        print("Eek! An 'x'!")
+        break
+    print(letter)
+else :
+        print("No 'x' in there.")
+        
+# 숫자 시퀀스 생성하기 : range()
+# 1) range() 함수는 리스트나 튜플 같은 자료구조를 생성하여 저장하지 않더라도 특정 범위 내에서 숫자 스트림 반환
+# 2) 슬라이스[slice()] 사용법과 비슷
+# range(start,stop,step)
+
+for x in range(0,3) : #0부터 (3-1)까지
+    print(x)
+    
+
+# 2에서 0의 리스트 (거꾸로 진행)
+for x in range(2,-1,-1) :
+    print(x)
+
+
+# 연습문제 6.1
+list = []
+for t in range(3,-1,-1) :
+    list.append(t)
+    
+print(list)
+
+# 연습문제 6.2
+guess_me = 7
+number = 1
+
+while True :
+    if number < guess_me :
+        print('too low')
+    elif number == guess_me :
+        print('found it!')
+        break
+    else :
+        print('oops')
+    number += 1
