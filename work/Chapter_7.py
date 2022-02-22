@@ -116,3 +116,111 @@ print(marxes[-3])
 marxes=['Goucho','Chico','Harpo']
 a = marxes[0:2] # 0부터 (2-1)까지
 print(a)
+b = marxes[::2]
+print(b)
+c = marxes[::-2]
+print(c)
+
+# 리스트 끝에 항목 추가 : append()
+marxes=['Goucho','Chico','Harpo']
+marxes.append('Zeppo')
+print(marxes)
+
+# 리스트 중간에 항목 추가 : 오프셋, insert()
+marxes=['Goucho','Chico','Harpo']
+marxes.insert(2,'Gummo')
+print(marxes)
+
+# 모든 항목 복제하기 : * 
+t = ["blah"]*3
+print(t)
+
+# 리스트 병합하기 extend()와 +
+marxes=['Goucho','Chico','Harpo','Zeppo']
+others=['Gummo','Karl']
+marxes.extend(others)
+print(marxes)
+
+marxes=['Goucho','Chico','Harpo','Zeppo']
+others=['Gummo','Karl']
+marxes+=others
+print(marxes)
+
+# extend를 사용하지 않고 append로 사용하면 항목을 병합하지 않고 others가 하나의 리스트로 추가가 됨
+marxes=['Goucho','Chico','Harpo','Zeppo']
+others=['Gummo','Karl']
+marxes.append(others)
+print(marxes)
+
+
+# 오프셋으로 항목 바꾸기
+marxes=['Goucho','Chico','Harpo']
+marxes[2] = 'Wanda'
+print(marxes)
+
+# 슬라이스로 항목 바꾸기 
+numbers = [ 1, 2, 3, 4]
+numbers[1:3] = [8,9]
+print(numbers)
+
+numbers = [ 1, 2, 3, 4]
+numbers[1:3] = [7,8,9] # 항목수가 달라도 insert 됨
+print(numbers)
+
+
+numbers = [ 1, 2, 3, 4]
+numbers[1:3] = [] # 제거
+print(numbers)
+
+numbers = [ 1, 2, 3, 4]
+numbers[1:3] = 'wat?' # 문자열이 한글자씩 한 오프셋으로 자리가 잡힘
+print(numbers)
+
+# 오프셋으로 항목 삭제하기
+marxes=['Groucho','Chico','Harpo','Zeppo','Gummo','Karl']
+del marxes[-1] #del 함수 사용
+print(marxes)
+
+del marxes[1] # 중간의 오프셋에 있는 항목을 삭제하면 앞으로 한칸 씩 당겨진다. 길이 감소
+print(marxes)
+
+# 값으로 항목 삭제하기 - 리스트에 같은 값으로 항목이 중복된다면, remove()는 첫번째 항목만 삭제시킴.
+marxes=['Groucho','Chico','Harpo']
+marxes.remove('Groucho')
+print(marxes)
+
+#오프셋으로 항목을 얻은 후 삭제하기 : pop()
+marxes=['Groucho','Chico','Harpo','Zeppo']
+pops = marxes.pop() #pop() 안에 인수가 없으면 기본값은 -1(끝 항목)
+print('pops=',pops,'marxes= ',marxes)
+
+pops = marxes.pop(1)
+print('pops=',pops,'marxes= ',marxes)
+
+
+## 참고 ##
+# append()로 새로운 항목을 끝에 추가한 뒤 pop()으로 다시 마지막 항목을 제거했다면, 후입선출(LIFO - Last In First Out) 자료구조인 스택(stack)
+# append()로 새로운 항목을 끝에 추가한 뒤 pop(0)을 이용했다면, 선입선출(FIFO - First In First Out) 자료구조인 큐(QUEUE)
+
+
+# 모든 항목 삭제 : clear()
+work_quotes = ['Working hard?','Quick question!','Number one priorities!']
+print(work_quotes)
+work_quotes.clear()
+print(work_quotes)
+
+# 값으로 오프셋 찾기 : index()
+marxes=['Groucho','Chico','Harpo','Zeppo']
+a = marxes.index('Chico')
+print(a)
+
+simpsons = ['Lisa','Bart','Marge','Homer','Bart'] # 동일한 항목이 있을 경우 첫번째 오프셋만 반환
+a = simpsons.index('Bart')
+print(a)
+
+# 존재 여부 확인하기 : in
+marxes=['Groucho','Chico','Harpo','Zeppo']
+print('Groucho' in marxes)
+
+print('Bob' in marxes)
+
