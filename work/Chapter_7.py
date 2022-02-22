@@ -276,7 +276,7 @@ print('d=',d)
 
 
 # 깊은 복사 : deepcopy()
-a = [1, 2, 3]
+a = [1, 2, [8,9]]
 b = a.copy()    # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
 c = list(a)     # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
 d = a[:]        # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
@@ -285,3 +285,135 @@ print('a=',a)
 print('b=',b)
 print('c=',c)
 print('d=',d)
+
+a[2][1] = 10 # 얕은 복사가 진행됨
+print('a=',a)
+print('b=',b)
+print('c=',c)
+print('d=',d)
+
+
+import copy # deep copy 하려면 import copy 필요
+a = [1,2,[8,9]]
+b = copy.deepcopy(a) # 깊은 복사
+print(a)
+print(b)
+
+a[2][1] = 10
+print(a)
+print(b)
+
+# 리스트 비교
+a = [7,2]
+b = [7,2,9]
+
+print( a == b )
+print( a <= b )
+print( a < b )
+
+a = [3,2]
+b = [1,2,3]
+print(a>b)
+
+# 순회하기 : for 와 in
+cheeses = ['brie', 'gjetost', 'havarti']
+for cheese in cheeses :
+    print(cheese)
+
+print('='*20)
+cheeses = ['brie', 'gjetost', 'havarti']
+for cheese in cheeses :
+    if cheese.startswith('g') :
+        print("I won't eat anything that starts with 'g'")
+        break
+    else :
+        print(cheese)
+print('='*20)
+cheeses = ['brie', 'gjetost', 'havarti']
+for cheese in cheeses :
+    if cheese.startswith('x') :
+        print("I won't eat anything that starts with 'x'")
+        break
+    else :
+        print(cheese)
+else :
+    print("Didn't find anything that started with 'x'")
+print('='*20)
+cheeses = []
+for cheese in cheeses :
+    print('This shop has some lovely',cheese)
+    break
+else : #break 문이 실행되지 않으면 실행된다.
+    print('This is not much of a cheese shop, is it?')
+    
+print('='*20)
+# 여러 시퀀스 순회하기 : zip()
+days = ['Monday','Tuesday','Wednesday']
+fruits = ['banana','orange','peach']
+drinks = ['coffee','tea','beer']
+desserts = ['tiramisu','ice cream','pie','pudding'] 
+for day, fruit, drink, dessert in zip(days, fruits, drinks, desserts) :
+    print(day, ": drink", drink, "- eat", fruit, "- enjoy", dessert) 
+    
+
+english = 'Monday','Tuesday','Wednesday' 
+french = 'Lundi','Mardi','Mercredi'
+
+# 두 개의 튜플을 만들기 위해 zip()을 사용한다.
+lists = list(zip(english,french)) 
+print(lists)
+
+dicts = dict(zip(english,french))
+print(dicts) 
+
+# 리스트 컴프리헨션 - 이번 절에서는 for/in 문의 순회 기능 가짐
+number_list = []
+number_list.append(1)
+number_list.append(2)
+number_list.append(3)
+number_list.append(4)
+number_list.append(5)
+print(number_list) 
+
+number_list = []
+for number in range(1,6) :
+    number_list.append(number)
+
+print(number_list)
+
+number_list = list(range(1,6))
+print(number_list)
+
+
+
+# 리스트 컴프리헨션으로 정수 리스트 만들기
+# [표현식 for 항목 in 순회 가능한 객체]
+number_list = [number for number in range(1,6)]
+print(number_list)    
+
+number_list = [number-1 for number in range(1,6)]
+print(number_list) 
+
+#조건식도 포함 가능
+a_list = [number for number in range(1,6) if number % 2 == 1]
+print(a_list)
+
+
+rows = range(1,4)
+cols = range(1,3)
+for row in rows :
+    for col in cols :
+        print(row,col)
+        
+
+rows = range(1,4)
+cols = range(1,3)
+cells = [(row,col) for row in rows for col in cols]
+for cell in cells :
+    print(cell)
+    
+
+# 튜플은 더 적은 공간을 사용한다.
+# 실수로 튜플의 항목이 손상될 염려가 없다.
+# 튜플을 딕셔너리 키로 사용할 수 있다.
+# 네임드튜플은 객체의 단순한 대안이 될 수 있다.
