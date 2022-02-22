@@ -224,3 +224,64 @@ print('Groucho' in marxes)
 
 print('Bob' in marxes)
 
+# 값 세기 : count()
+marxes=['Groucho','Chico','Harpo']
+print(marxes.count('Harpo'))
+
+
+# 문자열로 변환하기 : join()
+marxes=['Groucho','Chico','Harpo']
+text = ','.join(marxes)
+print(text) #반환되는 값은 문자열
+
+# 정렬하기 : sort(), sorted()
+# sort() : 리스트 자체를 내부적으로 정렬
+# sorted() : 리스트의 정렬된 복사본을 반환
+# 리스트 항목이 숫자면 오름차순, 문자면 알파벳순
+marxes=['Groucho','Chico','Harpo']
+sorted_marxes = sorted(marxes)
+print(sorted_marxes)
+
+marxes=['Groucho','Chico','Harpo']
+marxes.sort() # 함수 실행
+print(marxes)
+
+#항목 개수 얻기 : len()
+marxes=['Groucho','Chico','Harpo']
+print(len(marxes))
+
+# 할당하기
+a = [1, 2, 3]
+print('a=',a)
+b = a
+print('b=',b)
+a[0] = 'surprise'
+print('a=',a)
+print('b=',b) # a 리스트의 항목이 바뀌면 b도 바뀐다.
+
+b[0] = 'I have surprises'
+print('b=',b)
+print('a=',a)
+
+#복사하기 : copy()-메서드, list()-변환 함수, 슬라이스 [:]
+a = [1, 2, 3]
+b = a.copy()    # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
+c = list(a)     # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
+d = a[:]        # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
+
+print('a=',a)
+print('b=',b)
+print('c=',c)
+print('d=',d)
+
+
+# 깊은 복사 : deepcopy()
+a = [1, 2, 3]
+b = a.copy()    # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
+c = list(a)     # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
+d = a[:]        # 복사본 (새로운 객체) - a에 영향을 주지 않는다.
+
+print('a=',a)
+print('b=',b)
+print('c=',c)
+print('d=',d)
