@@ -152,3 +152,47 @@ second = {'b':'platypus'}
 first.update(second)
 print(first)
 
+# 키와 del로 항목 삭제하기
+del pythons['Marx']
+print(pythons)
+
+del pythons['Howard']
+print(pythons)
+
+
+# 키로 항목 가져온 뒤 삭제하기 : pop()
+lens = len(pythons)
+print(lens)
+
+text = pythons.pop('Palin')
+print(text)
+
+lens = len(pythons)
+print(lens)
+
+# 모든 항목 삭제하기 : clear()
+pythons.clear()
+print(pythons)
+
+# 키 멤버십 테스트 : in
+# 딕셔너리에 키가 존재하는지 알고 싶다면 in을 사용.
+pythons = {'Chapman':'Graham','Cleese':'John','Jones':'Terry','Palin':'Michael','Idle':'Eric'}
+
+print ('Chapman' in pythons)
+
+print ('Palin' in pythons)
+
+# 할당하기 : =
+signals = {'green':'go','yellow':'go faster','red':'smile for the camera'}
+print(signals)
+save_signals = signals
+signals['blue'] = 'confuse everyone'
+print(save_signals)
+# 얕은 복사 : copy()
+signals = {'green':'go','yellow':'go faster','red':'smile for the camera'}
+original_signals = signals.copy()
+
+signals['blue'] = 'confuse everyone'
+print(signals)
+
+print(original_signals)
