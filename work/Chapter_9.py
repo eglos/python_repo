@@ -1,0 +1,271 @@
+# 함수
+# 코드의 재사용을 위해 함수를 사용
+# define : 0개 또는 1개 이상의 매개변수를 갖는다.
+# call : 0개 또는 1개 이상의 결과를 얻는다.
+
+# 함수 정의하기 : def
+# def와 함수이름, 괄호를 입력 . 괄호 안에는 옵션으로 매개변수(parameter)입력. 그리고 마지막으로 콜론(:)을 붙인다.
+# 함수 이름의 첫글자는 반드시 영문자나 언더바(_)를 사용해야 한다. 그리고 영문자, 숫자, 언더바만 사용할 수 있다.
+
+def do_nothing() :
+    print("pass!")
+    pass
+
+
+# 함수 호출하기 (call function)
+do_nothing()
+
+def make_a_sound() :
+    print('quack')
+
+make_a_sound()
+
+def agree() :
+     return True #True 반환
+
+if agree() :
+     print('Splendid!')
+else :
+      print('That was Unexpected.')
+
+
+
+
+# 인수와 매개변수
+# 함수 외부에서는 인수라고 부르지만, 함수 내부에서는 매개변수임   
+def echo(anything) :
+    return print(anything + ' ' + anything) #매개변수
+
+echo('Rump') #인수
+
+
+# 인수를 취하는 함수 작성
+def commentary(color) :
+    if color == 'red' :
+        return "It's a tomato."
+    elif color == 'green' :
+        return "It's a green pepper."
+    elif color == 'bee purple' :
+        return "I don't know what it is, but only bees can see it."
+    else :
+        return "I've never heard of the color " + color + '.'
+
+comments = commentary('blue')
+print(comments)
+
+print(do_nothing())
+
+# 유용한 None
+thing = None
+if thing : 
+    print("It's some thing")
+else :
+    print("It's no thing")
+    
+
+if thing is None : #빠뜨린 빈 값을 구분하기 위해 None을 사용한다. 
+    print("It's some thing")
+else :
+    print("It's no thing")
+
+
+# 정수(0) 혹은 부동소수점 숫자(0.0), 빈 문자열(''), 빈 리스트([]), 빈 튜플 ((,)), 빈 딕셔너리({}), 빈 셋(set())은 모두 False지만, None과 같지 않다는 점 유의
+def whatis(thing) :
+    if thing is None :
+        print(thing,'is None')
+    elif thing :
+        print(thing,'is True')
+    else :
+        print(thing,'is False')
+
+
+whatis(None) 
+
+whatis(True) 
+
+whatis(False) 
+
+
+# 위치 인수
+def menu(wine, entree, dessert) :
+   return {'wine' : wine, 'entree' : entree, 'dessert' : dessert}
+    
+t1 = menu('chardonnay','chicken','cake') 
+   
+   
+print(t1)
+
+t2 = menu('beef','bagel','bordeaux') 
+print(t2)
+
+# 키워드 인수
+# 위치 인수의 혼란을 피하기 위해 매개변수에 상응하는 이름을 인수에 지정할 수 있다.
+t3 = menu(entree='beef',dessert='bagel',wine='bordeaux')
+print(t3)
+
+# 기본 매개변수 값 지정하기
+def menu(wine, entree, dessert = 'pudding') :
+     return {'wine' : wine, 'entree' : entree, 'dessert' : dessert}
+ 
+print(menu('chardonnay','chicken'))
+
+print(menu('dunkelfelder','duck','doughnut'))
+
+def buggy(arg, result = []) : 
+    result.append(arg)
+    print(result)
+
+buggy('a')
+
+buggy('b') # 함수에 기본매개변수로 리스트를 취하면, 인수를 넣었을 때 이전 인수는 리스트에 그대로 남아있음.
+
+# 수정
+def works(arg) :
+    result = [] #함수 실행할 때마다 빈 리스트 선언
+    result.append(arg)
+    print(result)
+    
+works('a')    
+
+works('b')
+
+#첫번째 인수 호출을 가리키기 위해 매개변수에 다른 값을 넣어서 수정할 수 있다. (가끔 파이썬 기술 면접에 등장)   **************************************************
+def nonbuggy(arg, result=None) :
+    if result is None :
+        result = []
+    result.append(arg)
+    print(result)
+    
+nonbuggy('a')
+
+nonbuggy('b')
+
+
+# 위치 인수 분해하기/모으기 : *
+# 애프터리스크(*)
+
+def print_args(*args) : # 튜플 반환
+    print('Positional tuple :', args)
+    
+# 함수를 인수 없이 호출하면 *args에는 아무것도 없음
+print_args()
+
+# 함수에 인수를 넣어서 args 튜플 출력
+print_args(3,2,1,'wait!','uh...')
+
+# 가변 인수를 사용하는 print()와 같은 함수는 매우 유용
+# 함수에 위치 인수를 지정할 때 맨 끝에 *args를 써서 나머지 인수 모두 취하게 할 수 있음 
+def print_more(required1, required2, *args) :
+    print('Need this one:',required1)
+    print('Need this one. too:',required2)
+    print('All the rest:',args)
+    
+print_more('cap','gloves','scarf','monocle','mustache wax')
+
+# ''' 또는 """ : 여러줄 주석
+''' 
+* 요약
+1. 위치 인수를 함수에 전달하면, 함수 내 위치 매개변수와 일치
+2. 튜플 인수를 함수에 전달하면, 함수 내 튜플 매개변수가 있다
+3. 위치 인수를 함수에 전달하고, 매개변수 *args로 수집하여 튜플 인수로 해석할 수 있다.
+4. args라는 튜플 인수를 함수에 전달하여, 위치 매개변수 *args로 분해할 수 있다. 이것은 튜플 매개변수 args 안에 다시 수집된다.
+'''
+
+print_args(2,5,7,'x')
+
+args = (2,5,7,'x') 
+print_args(args) # 튜플을 하나의 항목으로 인식
+print_args(*args) # 튜플 안의 항목들을 한개씩 인식
+
+
+'''
+# 키워드 인수 분해하기/모으기 : *
+1. 키워드 인수를 딕셔너리로 묶기 위해 두 개의 애스터리스크(**) 사용
+2. 인수의 이름은 키고, 값은 이 키에 대응하는 딕셔너리 값.
+'''
+
+def print_kwargs(**kwargs) :
+    print('Keyword arguments: ',kwargs)
+    
+print_kwargs()
+print_kwargs(wine='merlot', entree='mutton', dessert='macaroon')
+
+
+'''
+함수 내에서 kwargs는 딕셔너리 매개변수. 
+
+* 인수 순서
+- 위치 인수
+- 위치 인수(*args) - 옵션
+- 키워드 인수(**kwargs) - 옵션
+
+* 요약
+1. 키워드 인수를 함수에 전달하면, 함수 내 키워드 매개변수와 일치
+2. 딕셔너리 인수를 함수에 전달하면, 함수 내 딕셔너리 매개변수가 있음
+3. 하나 이상의 키워드 인수(이름=값)를 함수에 전달하고 이름 **kwargs에 수집하여, kwargs 딕셔너리 매개변수로 해석할 수 있다.
+4. 함수 외부에서 **kwargs는 딕셔너리 kwargs를 '이름=값' 인수로 분해
+5. 함수 내부에서 **kwargs는 '이름=값' 인수를 단일 딕셔너리 매개변수 kwargs에 모은다.
+''' 
+
+
+# 키워드 전용 인수
+'''
+    파이썬 3에서는 키워드 전용 인수를 지정할 수 있다.
+'''
+def print_data(data, *, start=0, end=100) :
+    for value in (data[start:end]) :
+        print(value)
+        
+data = ['a','b','c','d','e','f','g']
+print_data(data)
+
+print("="*100)
+
+print_data(data,start=4)
+
+print("="*100)
+
+print_data(data,end=2)
+
+
+# 가변/불변 인수
+'''
+함수에 인수를 전달할 때 주의, 인수가 가변 객체인 경우 해당 매개변수를 통해 함수 내부에서 값을 변경할 수 있음.
+'''
+
+outside = ['one','fine','day']
+def mangle(arg) :
+    arg[1] = 'terrible!'
+
+mangle(outside)    
+
+print(outside)
+
+# 독스트링
+'''
+함수 바디 시작 부분에 문자열을 포함시켜 함수 정의에 문서를 붙일 수 있음
+'''
+
+def echo(anything) :
+    'echo returns its input argument'
+    return anything
+
+
+def print_if_ture(thing,check) :
+    '''
+    Prints the first argument if a second argument is true.
+    The operation is :
+        1. Check whether the *second* argument is true.
+        2. If it is, print the *first* argument.
+    '''
+    
+    if check :
+        print(thing)
+        
+help(echo)
+
+
+print(echo.__doc__) # __doc__은 docstring의 내부 이름인 함수 내의 변수
+
+
+######################################################################## 9.5 일등시민 : 함수 부터 다시 시작 
