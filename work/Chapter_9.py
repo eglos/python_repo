@@ -267,5 +267,93 @@ help(echo)
 
 print(echo.__doc__) # __doc__은 docstring의 내부 이름인 함수 내의 변수
 
+# 일등시민 : 함수
+'''
+    객체는 숫자, 문자열, 튜플, 리스트, 딕셔너리, 함수를 포함
+    파이썬에서 함수는 일등시민 : 함수를 변수에 할당하고, 다른 함수에서 이를 인수로 사용하고, 함수에서 이를 반환할 수 있음 
+'''
 
-######################################################################## 9.5 일등시민 : 함수 부터 다시 시작 
+def answer() : 
+    print(42)
+    
+answer()
+
+def run_something(func) :
+    func()
+    
+run_something(answer)
+
+print(type(run_something))
+
+# 함수 arg1+arg2
+
+def add_args(arg1, arg2) :
+    print(arg1+arg2)
+    
+def run_something_with_args(func,arg1,arg2) :
+    func(arg1,arg2)
+
+run_something_with_args(add_args, 2, 3)
+
+def sum_args(*args) :
+    return sum(args)
+
+def run_with_positional_args(func,*args) :
+    return func(*args)
+
+print(run_with_positional_args(sum_args,1,2,3,4))
+
+
+# 내부 함수
+'''
+    함수 안에 또 다른 함수를 정의할 수 있다.
+'''
+
+def outer(a,b) :
+    def inner(c,d) :
+        return c+d
+    return inner(a,b)
+
+print(outer(4,3))
+
+
+# 클로저 . 클로저는 다른 함수에 의해 동적으로 생성된다.
+def knights2(saying) :
+    def inner2() :
+        return "We are the knights who say : '%s'" % saying
+    return inner2
+
+a = knights2('Duck')
+print (a())
+b = knights2('Hasenpfeffer')
+print (b())
+
+
+
+# 익명 함수 : lambda
+'''
+    파이썬 람다함수는 단일 문장으로 표현되는 익명 함수
+'''
+def edit_story(words, func) :
+    for word in words :
+        print(func(word))
+    
+stairs = ['thud','meow','thud','hiss']
+
+def enliven(word) : # 첫글자를 대문자로 만들고 느낌표 붙이기
+    return word.capitalize() + '!'
+
+edit_story(stairs, enliven)
+
+
+# lambda 사용
+edit_story(stairs, lambda word : word.capitalize() + '!')
+
+
+# 제너레이터  : 시퀀스를 생성하는 객체
+'''
+'''
+print(sum(range(1,101)))
+
+
+# 
