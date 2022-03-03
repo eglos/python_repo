@@ -502,3 +502,67 @@ def amazing() :
     print('This function is named:',amazing.__name__)
     print('And its docstring is:',amazing.__doc__)
     
+# 재귀 함수
+'''
+    - 함수가 자기 자신을 호출하면 재귀함수.
+'''
+
+def dive() :
+    return dive()
+    
+#dive() #자기 자신을 너무 많이 호출하면 에러 발생 (1000회)
+
+def flatten(lol) :
+    for item in lol :
+        if isinstance(item, list) :
+            for subitem in flatten(item) :
+                yield subitem
+        else :
+            yield item
+lol = [1,2,[3,4,5],[6,[7,8,9],[]]]
+
+print(list(flatten(lol)))
+# yield from 표현식을 추가하여 제너레이터의 일부를 전달할 수 있음.
+
+def flatten(lol) :
+    for item in lol :
+        if isinstance(item, list) :
+            yield from flatten(item)
+        else :
+            yield item 
+
+lol = [1,2,[3,4,5],[6,[7,8,9],[]]]
+
+print(list(flatten(lol)))
+
+# 비동기함수 
+'''
+    - 비동기 함수(asychronous function) 를 정의하고 실행하기 위해서 async와 await 키워드가 파이썬 3.5에 추가
+    - 특징
+        1) 비교적 새로운 기능
+        2) 이해하기 조금 어렵다
+        3) 시간이 갈수록 더 중요해지고 더 잘 알려질 것이다.
+'''
+
+# 예외
+'''
+    - 예외
+    - 예외 처리
+'''
+
+# 에러 발생
+short_list = [1,2,3]
+position = 5
+# print(short_list[position]) # 에러 발생 Exception
+
+
+# 에러 처리 : try , except
+
+short_list = [1,2,3]
+position = 5
+try :
+    print(short_list[position]) # 에러 발생 Exception
+except : 
+    print ('Need a position between 0 and ', len(short_list) -1, 'but got ', position )
+    
+
