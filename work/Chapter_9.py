@@ -352,8 +352,153 @@ edit_story(stairs, lambda word : word.capitalize() + '!')
 
 # 제너레이터  : 시퀀스를 생성하는 객체
 '''
+    시퀀스를 생성하는 함수를 작성하여 활용할 수 있음
 '''
 print(sum(range(1,101)))
 
 
-# 
+# 데커레이터 (decorator)
+'''
+    하나의 함수를 취해서 또 다른 함수를 반환하는 함수.
+    이 파이썬 트릭을 사용하기 위해 다음 기술을 사용 
+        - *args 와 **kwargs
+        - 내부 함수
+        - 함수 인수
+'''
+
+#예시
+def document_it(func) :
+    def nuw_function (*args, **kwargs) :
+        print('Running function:',func.__name__)
+        print('Positional arguments:', args)
+        print('Keyword arguments:',kwargs)
+        result = func(*args,**kwargs)
+        print('Result:',result)
+        return result # 함수 반환
+    return nuw_function
+
+
+## 데커레이터 사용
+def add_ints(a,b):
+    return a+b
+
+add_ints(3,5) #8
+
+cooler_add_ints = document_it(add_ints) #데커레이터 수동 할당
+print(cooler_add_ints(3,5))
+
+# 위와 같이 수동으로 데커레이터를 할당하는 대신, 다음과 같이 데커레이터를 사용하고 싶은 함수에 그냥 @데커레이터_이름을 추가한다.
+@document_it
+def add_ints(a,b) :
+    return a + b
+
+add_ints(3,5)
+
+# 함수는 여러 데커레이터를 가질 수 있다. 
+# result를 제곱하는 square_it() 데커레이터 작성
+def square_it(func) :
+    def new_function(*args, **kwargs) :
+        result = func(*args, **kwargs)
+        return result * result
+    return new_function
+
+
+print("*"*100)
+
+@document_it
+@square_it
+def add_ints(a,b) :
+    return a + b
+
+print(add_ints(3,5))
+'''
+Running function: new_function
+Positional arguments: (3, 5)
+Keyword arguments: {}
+Result: 64
+'''
+
+print("*"*100)
+
+@square_it
+@document_it
+def add_ints(a,b) :
+    return a + b
+
+print(add_ints(3,5)) #데코레이터 순서를 바꾸면 결과는 같으나, 중관 과정이 달라짐을 유의
+
+# 네임스페이스와 스코프 (** 중요)
+'''
+파이썬 프로그램에는 다양한 네임스페이스가 있다.
+네임스페이스는 특정 이름이 유일하고, 다른 네임스페이스에서의 같은 이름과 관계가 없는 것을 말한다.
+'''
+'''
+# 메인 프로그램은 전역 네임스페이스를 정의
+# 메인 프로그램의 네임스페이스에서 선언된 변수는 전역변수이다.
+'''
+
+animal = 'fruitbat' #전역변수
+def print_global() :
+    print('insid print_global:',animal)
+    
+    
+print('insid print_global:',animal)
+print_global()
+
+# 함수에서 전역 변수의 값을 얻어서 바꾸려하면 에러 발생
+def change_and_print_global():
+    print('inside change_and_print_global:',animal)
+    animal = 'wombat'
+    print('after the change:', animal)
+
+
+#change_and_print_global() #전역변수를 수정하여 에러 발생
+
+# 함수 내에서 전역 변수와 이름이 같은 변수 animal을 변경할 때, 함수 내 animal 변수를 변경한다.
+def change_local() :
+    animal = 'wombat'
+    print('inside change_local:',animal, id(animal))
+    
+change_local()
+
+print(id(animal)) #함수 내의 animal 객체의 id와 전역변수 animal의 id는 다름 (다른 객체 같은 이름)
+
+# 함수 내의 지역 변수가 아닌 전역 변수를 접근하기 위해 global 키워드 사용
+animal = 'fruitbat'
+def change_and_print_global() :
+    global animal # global 키워드 사용
+    animal = 'wombat'
+    print('after the change:', animal)
+    
+change_and_print_global()
+
+'''
+    - 파이썬은 네임스페이스의 내용을 접근하기 위해 두가지 함수 제공
+        * locals() 함수는 로컬(지역) 네임스페이스의 내용이 담긴 딕셔너리를 반환
+        * globals() 함수는 글로벌(전역) 네임스페이스의 내용이 담긴 딕셔너리를 반환
+'''
+
+animal = 'fruitbat' #전역변수
+def change_local() :
+    animal = 'wombat' #지역변수
+    print('locals:',locals())
+    
+change_local()
+
+print('globals:',globals())
+print(animal)
+
+# 이름에 _ 와  __ 사용하기
+'''
+    - 언더바 두개(__)로 시작하고 끝나는 이름은 파이썬 내부 사용을 위해 예약되어 있다.
+    - 그러므로 변수를 선언할 때 두 언더바를 사용하면 안된다 (************)
+'''
+
+def amazing() :
+    '''
+        This is the amazing function.
+        Want to see it again?
+    '''
+    print('This function is named:',amazing.__name__)
+    print('And its docstring is:',amazing.__doc__)
+    
