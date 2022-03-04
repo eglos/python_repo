@@ -478,7 +478,7 @@ change_and_print_global()
         * globals() 함수는 글로벌(전역) 네임스페이스의 내용이 담긴 딕셔너리를 반환
 '''
 
-animal = 'fruitbat' #전역변수
+animal = 'fruitbat' #전역변수 
 def change_local() :
     animal = 'wombat' #지역변수
     print('locals:',locals())
