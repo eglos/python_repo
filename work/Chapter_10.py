@@ -179,3 +179,25 @@ class EmailPerson(Person) :
         self.name = name
         self.email = email
 
+
+# 다중 상속
+'''
+    - 파이썬의 상속은 메서드 해석 순서(MRO)에 달려있다.
+'''
+class Animal :
+    def says(self) :
+        return 'I speak!'
+
+class Horse(Animal) :
+    def says(self) :
+        return 'Neigh!'
+    
+class Donkey(Animal) :
+    def says(self) :
+        return 'Hee-haw!'
+
+class Mule(Donkey, Horse) :
+    pass
+
+class Hinny(Horse, Donkey) :
+    pass
