@@ -201,3 +201,70 @@ class Mule(Donkey, Horse) :
 
 class Hinny(Horse, Donkey) :
     pass
+
+
+'''
+    Mule 클래스에서 메서드나 속성을 찾을 때 순서
+    1. 객체 자신 (Mule 타입)
+    2. 객체의 클래스 (Mule)
+    3. 클래스의 첫 번째 부모 클래스 (Donkey)
+    4. 클래스의 두 번째 부모 클래스 (Horse)
+    5. 부모의 부모 클래스 (Animal)
+'''
+
+print(Mule.mro())
+
+mule = Mule()
+hinny = Hinny()
+
+print(mule.says())
+print(hinny.says())
+
+# 믹스인 
+'''
+    - 클래스 정의에 부모 클래스를 추가하여 상속받을 수 있음
+    - 그러나 이를 헬퍼(helper)의 목적으로만 사용할 수 있다. 즉, 다른 상위 클래스와 메서드를 공유하지 않으며 이전 절에서 언급한 메서드 해석 순서의 모호성을 피한다. 이러한 부모 클래스를 믹스인 클래스라고 한다.
+'''
+class PrettyMixin() :
+    def dump(self) :
+        import pprint
+        pprint.pprint(vars(self))
+class Thing(PrettyMixin) :
+    pass
+
+t = Thing()
+t.name = "Nyarlathotep"
+t.feature = "ichor"
+t.age = "eldritch"
+
+print(t.dump())
+
+# 자신 : self
+'''
+    - 파이썬에서 (공백 사용 외에) 어떤 한 비판은 인스턴스 메서드의 첫 번째 인수로 self를 포함해야 함
+'''
+# 이전 예제의 Car 클래스에서 exclaim() 메서드를 다시 호출
+a_car = Car()
+print(a_car.exclaim())
+
+"""
+    속성 접근
+"""
+
+# 직접 접근
+'''
+    - 속성 값을 직접 가져와서 설정할 수 있음
+'''
+
+class Duck :
+    def __init__(self, input_name) :
+        self.name = input_name
+        
+        
+fowl = Duck('Daffy')
+print(fowl.name)
+
+# 누군가 수정한 경우
+
+fowl.name = 'Daphne'
+print(fowl.name)
