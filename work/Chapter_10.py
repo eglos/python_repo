@@ -268,3 +268,194 @@ print(fowl.name)
 
 fowl.name = 'Daphne'
 print(fowl.name)
+
+
+#Getter/Setter 메서드
+'''
+    - 어떤 객체 지향 언어에서는 외부로부터 바로 접근할 수 없는 private 객체 속성을 지원
+    - 파이썬에는 private 속성이 없지만, 조금의 프라이버시를 얻기 위해 애매한 속성 이름을 가진 Getter/Setter 메서드를 작성할 수 있음
+'''
+
+class Duck() :
+    def __init__(self, input_name) :
+        self.hidden_name = input_name
+    def get_name(self) :
+        print('inside the getter') 
+        return self.hidden_name
+    def set_name(self, input_name) :
+        print('inside the setter')
+        self.hidden_name = input_name
+
+don = Duck('Donald')
+don.get_name()
+don.set_name('Donna')
+don.get_name()
+
+# 속성 접근을 위한 프로퍼티
+'''
+    - 속성 프라이버시를 위한 파이써닉한 방법은 프로퍼티(property)를 사용하는 것
+'''
+class Duck() :
+    def __init__(self, input_name) :
+        self.hidden_name = input_name
+    def get_name(self) :
+        print('inside the getter') 
+        return self.hidden_name
+    def set_name(self, input_name) :
+        print('inside the setter')
+    name = property(get_name,set_name)
+    
+don = Duck('Donald')
+don.get_name()
+don.set_name('Donna')
+don.get_name()
+# 속성 이름을 사용하여 hidden_name 속성을 가져오거나 설정할 수 있음
+don = Duck('Donald')
+print(don.name)
+
+# 두번째 방법은 데커레이터를 추가하고, 두 메서드 이름을 name으로 변경
+class Duck() : 
+    def __init__(self, input_name) :
+        self.hidden_name = input_name
+    @property
+    def name(self) :
+        print('inside the getter')
+        return self.hidden_name
+    @name.setter
+    def name(self, input_name) :
+        print('inside the setter')
+        self.hidden_name = input_name
+
+fowl = Duck('Howard')
+fowl.name
+fowl.name = 'Donald'
+fowl.name
+
+# 계산된 값의 프로퍼티
+class Circle() :
+    def __init__(self, radius) :
+        self.radius = radius
+    @property
+    def diameter(self) :
+        return 2 * self.radius
+    
+c = Circle(5)
+
+print(c.radius)
+
+print(c.diameter)
+
+# 프라이버시를 위한 네임 맹글링
+'''
+    파이썬은 클래스 정의 외부에서 볼 수 없도록 하는 속성에 대한 네이밍 컨벤션(naming convention)이 있다. 속성 이름 앞에 두 언더바(__)를 붙이면 된다.
+'''
+class Duck() :
+    def __init__(self, input_name) :
+        self.__name = input_name
+    @property
+    def name(self) :
+        print('inside the getter')
+        return self.__name
+    @name.setter
+    def name(self, input_name):
+        print('inside the setter')
+        
+        self.__name = input_name
+        
+fowl = Duck('Howard')
+print(fowl.name)
+fowl.name = 'Donald'
+print(fowl.name)
+
+
+# class와 객체 속성
+class Fruit :
+    color = 'red'
+    
+blueberry = Fruit()
+
+print(Fruit.color)
+
+print(blueberry.color)
+
+
+# 메서드 타입
+'''
+    - 메서드 앞에 데커레이터가 없다면 인스턴스 메서드. 첫 번째 인수는 객체 자신을 참조하는 self
+    - 메서드 앞에 @classmethod 데커레이터가 있다면 클래스 메서드이다. 첫 번째 인수는 cls. 클래스 자체를 참조한다.
+    - 메서드 앞에 @staticmethod 데커레이터가 있다면 정적 메서드이다. 첫 번째 인수는 위와 같이 자신의 객체나 클래스가 아님.
+'''
+
+# 인스턴스 메서드
+'''
+    - 클래스의 정의에서 메서드의 첫 번째 인수가 self라면 이 메서드는 인스턴스 메서드
+    - 이것은 일반적인 클래스를 생성할 때의 메서드 타입
+    - 인스턴스 메서드의 첫 번째 매개 변수는 self이고, 파이썬은 이 메서드를 호출할 때 객체를 전달한다.
+'''
+
+# 클래스 메서드
+'''
+    - 클래스 메서드는 클래스 전체에 영향을 미친다.
+    - 클래스 정의에서 함수에 @classmethod 데커레이터가 있다면 이것은 클래스 메서드
+    - 또한 이 메서드의 첫 번째 매개변수는 클래스 자신이다.
+'''
+class A():
+    count = 0
+    def __init__(self) :
+        A.count += 1
+    def exclaim(self) :
+        print("I'm an A!")
+    @classmethod
+    def kids(cls) :
+        print("A has", cls.count, "little objects.")
+
+easy_a = A()
+breezy_a = A()
+wheezy_a = A()
+A.kids()
+
+
+# 정적 메서드
+'''
+    - 정적 메서드는 클래스나 객체에 영향을 미치지 못한다.
+    - 이 메서드는 단지 편의를 위해 존재한다.
+    - 정적 메서드는 @staticmethod 데커레이터가 있고, 첫 번째 매개변수로 self나 cls가 없다.
+'''
+class CoyoteWeapon() :
+    @staticmethod
+    def commercial():
+        print('This CoyoteWeapon has been brought to you by Acme')
+
+CoyoteWeapon.commercial()
+
+# 덕 타이핑
+'''
+    - 파이썬은 다형성(polymorphism)을 느슨하게 구현했다.
+    - 이것은 클래스에 상관없이 같은 동작을 다른 객체에 적용할 수 있다는 것을 의미 
+'''
+class Quote():
+    def __init__(self, person, words) :
+        self.person = person
+        self.words = words
+    def who(self) : # 저장된 person 문자열의 값을 반환
+        return self.person
+    def says(self) : # 특정 구두점과 함께 저장된 words 문자열을 반환한다
+        return self.words + '.'
+    
+    
+class QuestionQuote(Quote) :
+    def says(self) :
+        return self.words + '?'
+
+class ExclamationQuote(Quote) :
+    def says(self) :
+        return self.words + '!'
+    
+
+hunter = Quote('Elmer Fudd', "I'm hunting wabbits")
+print(hunter.who(),'says:',hunter.says())
+
+# 매직 메서드
+'''
+    - 
+'''
