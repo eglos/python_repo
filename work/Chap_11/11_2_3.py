@@ -1,0 +1,1 @@
+from critters import rougarou, wendigo 
