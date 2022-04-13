@@ -457,5 +457,89 @@ print(hunter.who(),'says:',hunter.says())
 
 # 매직 메서드
 '''
-    - 
+    - 비교 연산을 위한 매직 메서드
+    __eq__(self,other)   self == other
+    __ne__(self,other)   self != other
+    __lt__(self,other)   self <  other
+    __gt__(self,other)   self >  other
+    __le__(self,other)   self <= other
+    __ge__(self,other)   self >= other
 '''
+'''
+    - 산술 연산을 위한 매직 메서드
+    __add__(self,other)  self + other
+    __sub__(self,other)  self - other
+    __mul__(self,other)  self * other
+    __floordiv__(self,other)  self // other
+    __truediv__(self,other)  self / other
+    __mod__(self,other)  self % other
+    __pow__(self,other)  self ** other
+''' 
+
+#애그리게이션과 콤퍼지션
+'''
+    - 자식 클래스가 부모 클래스처럼 행동하고 싶을 때, 상속은 좋은 기술 (자식 is-a 부모)
+    - 개발자는 정교한 상속 계층 구조에 유혹될 수 있지만, 콤퍼지션(composition) 혹은 애그리게이션(aggregation)(X has-a Y)의 사용이 더 적절한 경우가 있다.
+'''
+# 부리(bill)와 꼬리(tail) 객체를 만들어서 새로운 오리(duck) 객체에 부여
+class Bill() :
+    def __init__(self, description) :
+        self.description = description
+
+class Tail() :
+    def __init__(self, length) :
+        self.length = length
+        
+class Duck() :
+    def __init__(self, bill, tail) :
+        self.bill = bill
+        self.tail = tail
+    def about(self) :
+        print('This duck has a', self.bill.description, 'bill and a', self.tail.length, 'tail') 
+        
+a_tail = Tail('Long')
+a_bill = Bill('wide orange')
+duck = Duck(a_bill,a_tail)
+duck.about()
+
+# 네임드 튜플
+'''
+    - 네임드 튜플은 튜플의 서브클래스
+    - 이름(.name)과 위치([offset])로 값에 접근할 수 있다.
+'''
+
+from collections import namedtuple
+Duck = namedtuple('Duck', 'bill tail')
+duck = Duck('wide orange','long')
+print(duck)
+print(duck.bill)
+print(duck.tail)
+
+'''
+    - 딕셔너리에서 네임드 튜플을 만들 수 있다.
+'''
+parts = {'bill':'wide orange', 'tail':'long'} # parts: dict[str, str]
+duck2 = Duck(**parts) # **parts : 키워드 인수
+print(duck2)
+
+# 데이터 클래스
+'''
+    - 많은 개발자는 행동(매서드)이 아니라 주로 데이터(속성)을 저장하기 위해 객체를 생성하는 것을 선호한ㄷ.
+    - 파이썬 3.7부터는 데이터 클래스를 지원
+'''
+# 보통의 name 속성을 가진 객체
+class TeenyClass() :
+    def __init__(self,name) :
+        self.name = name
+        
+teeny = TeenyClass('itsy')
+print(teeny.name)
+
+# 데이터 클래스를 사용하여 같은 작업을 하면 조금 다르게 보임
+from dataclasses import dataclass
+@dataclass #dataclass 데커레이터 표시
+class TeenyDataClass :
+    name : str # name의 타입 지정
+    
+teeny = TeenyDataClass('bitsy')
+print(teeny.name)
