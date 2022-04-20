@@ -104,3 +104,90 @@ print(len(lines), 'lines read')
 for line in lines :
     print(line, end='')
     
+
+# 이진 파일 쓰기 : write()
+'''
+    - 모드(mode)에 'b'를 포함하면 파일은 이진 모드로 열린다.
+    - 이때 문자열 대신 바이트를 읽고 쓸 수 있다.
+'''
+
+bdata = bytes(range(0,256))
+print(len(bdata))
+fout = open('bfile','wb')
+fout.write(bdata)
+fout.close()
+print('=================')
+
+fout = open('bfile','wb')
+size = len(bdata)
+offset = 0
+chunk = 100
+while True :
+    if offset > size :
+        break
+    fout.write(bdata[offset:offset+chunk])
+    offset += chunk
+    print(offset)
+
+fout.close()
+
+# 이진 파일 읽기 : read()
+
+fin = open('bfile','rb')
+bdata = fin.read()
+print('fin len=',len(bdata))
+fin.close()
+
+# 자동으로 파일 닫기 : with
+'''
+    - 열려있는 파일을 닫지 않았을 때, 파이썬은 이 파일이 더 이상 참조되지 않는 것을 확인한 뒤 파일을 닫는다.
+    - 파이썬은 파일을 여는 것과 같은 일을 수행하는 컨텍스트 매니저(context manager)가 있다. 
+    - 파일을 열 때 'with 표현식 as 변수' 형식을 사용한다.
+'''
+with open('relativity','wt') as fout : #컨텍스트 매니저 코드 블록의 코드 한 줄이 실행되고 나서 (잘 수행되거나 문제가 있으면 예외 발생) 자동으로 파일을 닫아준다.
+    fout.write(poem)
+
+# 파일 위치 찾기 : seek()
+'''
+    - seek() 함수는 다른 바이트 오프셋으로 위치를 이동
+    - seek() 함수 형식은 seek(offset, origin)이며, 두번째 인수 origin에 대한 설명
+        * origin이 0일 때, 시작 위치에서 offset 바이트로 이동
+        * origin이 1일 때, 현재 위치에서 offset 바이트로 이동
+        * origin이 2일 때, 마지막 위치에서 offset 바이트 전 위치로 이동
+'''
+
+# 존재 여부 확인하기 : exists()
+'''
+    - 파일 혹은 디렉터리가 실제로 존재하는지 확인
+'''
+import os
+print(os.path.exists('oops.txt'))
+
+print(os.path.exists('./oops.txt'))
+
+# 유형 확인하기 : isfile()
+name = 'oops.txt'
+print(os.path.isfile(name))
+
+# 복사하기 : copy()
+import shutil
+shutil.copy('oops.txt','ohno.txt')
+
+# 이름 바꾸기: rename()
+import os
+#os.rename('ohno.txt','ohwell.txt')
+
+
+# 연결하기 : link(), symlink()
+'''
+    - link() : 저수준의 하드링크
+    - symlink() : 새 이름의 원본 파일을 저장하는 대안
+'''
+
+#os.link('oops.txt','yikes.txt')
+print(os.path.isfile('yikes.txt'))
+print(os.path.islink('yikes.txt'))
+
+#os.symlink('oops.txt','jeepers.txt') # 기능이 안됨.  [WinError 1314] 클라이언트가 필요한 권한을 가지고 있지 않습니다
+os.path.islink('jeepers.txt')
+
