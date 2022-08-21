@@ -28,4 +28,3 @@ from datetime import timedelta
 one_day = timedelta(days=1)
 tomorrow = now + one_day
 print(tomorrow)
-
